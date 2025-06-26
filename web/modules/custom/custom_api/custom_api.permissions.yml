@@ -1,0 +1,7 @@
+access tutorials api:
+  title: 'Access Tutorials API'
+  description: 'Allows access to the tutorials API endpoint.'
+
+access topics api:
+  title: 'Access Topics API'
+  description: 'Allows access to the topics API endpoint.'

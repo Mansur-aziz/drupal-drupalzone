@@ -1,0 +1,7 @@
+content_generator.form:
+  path: '/admin/content/generate-tutorial-articles'
+  defaults:
+    _title: 'Generate Tutorial Topics'
+    _form: 'Drupal\content_generator\Form\TutorialArticleGeneratorForm'
+  requirements:
+    _permission: 'administer nodes'

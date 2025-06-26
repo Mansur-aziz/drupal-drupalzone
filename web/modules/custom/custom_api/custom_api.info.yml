@@ -1,0 +1,5 @@
+name: 'Custom APi'
+type: module
+description: 'Provides custom REST API endpoints for tutorials and topics.'
+package: Custom
+core_version_requirement: ^10 || ^11

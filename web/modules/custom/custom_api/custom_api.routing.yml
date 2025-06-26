@@ -1,0 +1,26 @@
+custom_api.tutorials:
+  path: '/api/tutorials'
+  defaults:
+    _controller: Drupal\custom_api\Controller\TutorialsController::getTopics
+    _title: 'Tutorials API'
+  requirements:
+    _permission: 'access tutorials api'
+  methods: [GET]
+
+custom_api.topics:
+  path: '/api/topics/{tid}'
+  defaults:
+    _controller: Drupal\custom_api\Controller\TopicsController::getTopic
+    _title: 'Topics API'
+  requirements:
+    _permission: 'access topics api'
+  methods: [GET]
+
+custom_api.singletopics:
+  path: '/api/singletopic/{nid}'
+  defaults:
+    _controller: Drupal\custom_api\Controller\SingleTopicsController::getTopic
+    _title: 'Single Topic API'
+  requirements:
+    _permission: 'access topics api'
+  methods: [GET]

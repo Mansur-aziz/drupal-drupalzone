@@ -60,3 +60,37 @@
 /drush
 /drupal.phar
 /drupal
+
+
+# Drupal specific directories
+/web/core
+/web/modules/contrib
+/web/themes/contrib
+/web/profiles/contrib
+/web/libraries
+/web/sites/*/settings.local.php
+/web/sites/*/services.local.yml
+/vendor/
+
+# Environment specific files
+.env
+.lando/
+.ddev/
+
+# IDE specific files
+.idea/
+.vscode/
+
+# Composer dependencies
+/vendor/
+/composer.lock
+/web/modules/contrib/
+/web/themes/contrib/
+/web/profiles/contrib/
+/web/libraries/
+/web/core/
+
+# Drupal generated files
+*.sql
+*.log
+tmp/

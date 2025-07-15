@@ -1,0 +1,78 @@
+Drupal Learning Path: Step-by-Step Topics by Functionality
+1. Drupal Fundamentals
+Drupal Architecture Overview => Understanding Drupal’s modular structure => Exploring Drupal’s core components (nodes, entities, themes, modules) => Introduction to Drupal’s request-response flow
+Installation and Setup => Installing Drupal using Composer => Configuring a local development environment (e.g., DDEV, Lando) => Setting up Drupal’s database and site configuration
+Drupal Site Building => Creating content types => Configuring fields and field types => Managing display modes (view modes and form modes)
+User and Permission Management => Creating user roles and permissions => Managing user accounts programmatically => Customizing user registration and login processes
+2. Module Development Basics
+Module Creation => Creating a custom module (structure and .info.yml file) => Defining module dependencies => Enabling and disabling modules
+Routing System => Creating custom routes (.routing.yml) => Defining route requirements (permissions, access checks) => Mapping routes to controllers
+Controllers => Creating a basic controller => Controller arguments (request, route parameters, services) => Controller outputs (render arrays, JSON, redirects)
+Permissions => Defining static permissions (.permissions.yml) => Creating dynamic permissions programmatically => Restricting access to routes and content
+3. Content and Entity System
+Nodes => Creating and managing nodes programmatically => Working with node fields and field APIs => Customizing node templates
+Entities => Understanding entity types (content vs. configuration entities) => Creating custom content entities (Entity API) => Defining entity bundles and fields
+Entity Queries => Building entity queries for content retrieval => Adding conditions and sorting to entity queries => Executing paged and ranged queries
+Entity Forms => Creating custom entity forms => Validating entity form submissions => Customizing entity form displays
+4. Theming and Frontend Development
+Theme Creation => Creating a custom theme (.info.yml file) => Defining regions and libraries => Overriding default templates
+Twig Templating => Using Twig templates for custom output => Working with Twig filters and functions => Debugging Twig templates (Twig debug mode)
+Libraries and Assets => Defining CSS/JS libraries (.libraries.yml) => Attaching libraries to pages or components => Optimizing asset delivery
+Responsive Design => Implementing responsive layouts in themes => Using Drupal’s breakpoint system => Managing responsive images
+5. Blocks and Layouts
+Custom Blocks => Creating custom blocks (Block Plugin API) => Defining block configuration and settings => Rendering blocks programmatically
+Layout Builder => Configuring layouts with Layout Builder => Creating custom layout plugins => Overriding Layout Builder templates
+6. Services and Dependency Injection
+Service Basics => Understanding Drupal’s service container => Using core services (e.g., entity_type.manager, logger) => Injecting services into controllers and plugins
+Custom Services => Creating a custom service (.services.yml) => Defining service dependencies => Using services in custom modules
+7. Events and Event Subscribers
+Events System => Understanding Drupal’s event system (Symfony EventDispatcher) => Subscribing to core events => Dispatching custom events
+Custom Event Subscribers => Creating custom event subscribers => Defining event listener priorities => Debugging event subscribers
+8. Configuration Management
+Configuration API => Working with configuration entities => Creating custom configuration (*.schema.yml) => Exporting and importing configuration
+Configuration Forms => Building configuration forms for modules => Validating and saving configuration data => Using configuration in custom logic
+9. Drupal APIs
+Form API => Creating custom forms (FormBase class) => Validating form submissions => Handling AJAX in forms
+Cache API => Implementing cacheable render arrays => Defining cache tags and contexts => Clearing caches programmatically
+Database API => Performing database queries (dynamic and static) => Using the database abstraction layer => Creating custom database tables
+Queue API => Creating and processing queues => Defining custom queue workers => Managing queue execution (cron, Drush)
+Token API => Using core tokens for dynamic content => Creating custom tokens => Replacing tokens programmatically
+REST API => Creating custom REST resources => Configuring REST endpoints => Securing REST APIs with authentication
+10. Logging and Debugging
+Drupal Logger => Logging messages using Drupal logger => Configuring log channels => Viewing logs in Drupal and external tools
+Debugging Techniques => Enabling Drupal’s debug mode => Using Devel module for debugging => Debugging with Xdebug and IDEs
+11. Drush and Console Commands
+Drush Basics => Installing and configuring Drush => Running core Drush commands => Troubleshooting with Drush
+Custom Drush Commands => Creating simple Drush commands => Defining Drush command arguments and options => Integrating Drush commands with services
+Drupal Console => Using Drupal Console for code generation => Creating custom Console commands => Automating module development with Console
+12. Advanced Module Development
+Plugins => Understanding Drupal’s plugin system => Creating custom plugin types => Using plugin annotations
+Field API => Creating custom field types => Defining field widgets => Building field formatters
+Views API => Creating custom Views plugins => Modifying Views programmatically => Creating custom Views handlers
+Migration API => Writing migration scripts for data import => Using migrate source plugins => Handling migration rollbacks
+13. Performance Optimization
+Caching Strategies => Configuring cache backends (e.g., Memcache, Redis) => Implementing lazy loading for entities => Using BigPipe for page rendering
+Performance Debugging => Profiling with Webprofiler module => Optimizing database queries => Reducing frontend asset load
+14. Security Best Practices
+Secure Coding => Sanitizing user input and output => Preventing XSS and SQL injection => Using Drupal’s security APIs
+Access Control => Implementing entity access control => Defining custom access checks => Securing routes and forms
+15. Testing and Quality Assurance
+Unit Testing => Writing PHPUnit tests for services => Mocking dependencies in unit tests => Running tests with Drush
+Functional Testing => Writing functional tests for controllers => Testing forms and user interactions => Using BrowserTestBase for browser tests
+Behat Testing => Writing Behat scenarios for Drupal => Configuring Behat with Drupal => Running behavior-driven tests
+16. Deployment and Maintenance
+Configuration Management Workflow => Exporting and importing configuration => Managing configuration in version control => Handling configuration splits
+Deployment Strategies => Setting up CI/CD for Drupal => Deploying Drupal with Composer => Managing database updates during deployment
+Site Maintenance => Running cron tasks for maintenance => Updating Drupal core and modules => Monitoring site health and logs
+17. Advanced Theming
+Theme Hooks => Creating custom theme hooks => Altering existing theme hooks => Implementing hook_preprocess
+JavaScript Behaviors => Writing Drupal-specific JavaScript behaviors => Attaching behaviors to DOM elements => Managing JavaScript dependencies
+18. Multisite and Multilingual
+Multisite Setup => Configuring Drupal multisite => Sharing modules and themes across sites => Managing multisite databases
+Multilingual Sites => Configuring Drupal for multilingual support => Translating content and configuration => Creating custom translation workflows
+19. Headless Drupal
+Decoupled Drupal => Setting up Drupal as a headless CMS => Using JSON:API for content delivery => Integrating with frontend frameworks (e.g., React, Vue)
+GraphQL Integration => Installing and configuring GraphQL module => Defining custom GraphQL queries => Optimizing GraphQL performance
+20. Community and Contribution
+Contributing to Drupal => Setting up a Drupal.org account => Submitting patches and merge requests => Writing documentation for Drupal core
+Module Contribution => Publishing modules to Drupal.org => Maintaining contrib modules => Following Drupal coding standards

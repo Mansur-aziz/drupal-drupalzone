@@ -1,0 +1,9 @@
+uuid: 995c7627-a96a-4468-8008-2e7e0953e960
+langcode: en
+status: true
+dependencies: {  }
+name: 'Skill Level'
+vid: skill_level
+description: null
+weight: -7
+new_revision: false

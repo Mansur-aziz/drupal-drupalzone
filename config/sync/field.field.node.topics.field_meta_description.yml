@@ -1,0 +1,19 @@
+uuid: 6d0dae74-e848-45b6-bc92-103177d53d38
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_meta_description
+    - node.type.topics
+id: node.topics.field_meta_description
+field_name: field_meta_description
+entity_type: node
+bundle: topics
+label: 'Meta Description'
+description: 'This field will have SEO SEO-related page meta description.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string_long

@@ -1,0 +1,4 @@
+content_generator.foo:
+  title: Generate Tutorial
+  route_name: content_generator.form
+  base_route: system.admin_content

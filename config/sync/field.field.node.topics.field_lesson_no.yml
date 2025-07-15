@@ -1,0 +1,23 @@
+uuid: c39b14f2-8f9f-4802-bd6f-ec7dbe105305
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_lesson_no
+    - node.type.topics
+id: node.topics.field_lesson_no
+field_name: field_lesson_no
+entity_type: node
+bundle: topics
+label: 'Lesson No.'
+description: 'Here we will add the lesson Number for the topics to make it in a proper sequence.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

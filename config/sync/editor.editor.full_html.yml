@@ -1,0 +1,213 @@
+uuid: 0d5281cb-a4a2-4700-9915-3c6edd883b06
+langcode: en
+status: true
+dependencies:
+  config:
+    - filter.format.full_html
+  module:
+    - ckeditor5
+_core:
+  default_config_hash: lurcn8yf33g3Dkzdc55cTfJa9salGp9ytSYyG1s7QMI
+format: full_html
+editor: ckeditor5
+settings:
+  toolbar:
+    items:
+      - bold
+      - italic
+      - strikethrough
+      - superscript
+      - subscript
+      - removeFormat
+      - '|'
+      - link
+      - '|'
+      - bulletedList
+      - numberedList
+      - '|'
+      - blockQuote
+      - drupalInsertImage
+      - insertTable
+      - horizontalLine
+      - '|'
+      - heading
+      - showBlocks
+      - codeBlock
+      - '|'
+      - sourceEditing
+      - fullScreen
+      - insertTemplate
+      - pageBreak
+      - '|'
+      - fontSize
+      - fontFamily
+      - fontBackgroundColor
+      - '|'
+      - emoji
+      - findAndReplace
+      - code
+      - '|'
+      - undo
+      - redo
+  plugins:
+    ckeditor5_codeBlock:
+      languages:
+        -
+          label: 'Plain text'
+          language: plaintext
+        -
+          label: C
+          language: c
+        -
+          label: 'C#'
+          language: cs
+        -
+          label: C++
+          language: cpp
+        -
+          label: CSS
+          language: css
+        -
+          label: Diff
+          language: diff
+        -
+          label: HTML
+          language: html
+        -
+          label: Java
+          language: java
+        -
+          label: JavaScript
+          language: javascript
+        -
+          label: PHP
+          language: php
+        -
+          label: Python
+          language: python
+        -
+          label: Ruby
+          language: ruby
+        -
+          label: TypeScript
+          language: typescript
+        -
+          label: XML
+          language: xml
+    ckeditor5_heading:
+      enabled_headings:
+        - heading2
+        - heading3
+        - heading4
+        - heading5
+        - heading6
+    ckeditor5_imageResize:
+      allow_resize: true
+    ckeditor5_list:
+      properties:
+        reversed: true
+        startIndex: true
+      multiBlock: true
+    ckeditor5_plugin_pack_auto_image__auto_image:
+      enabled: false
+    ckeditor5_plugin_pack_emoji_emoji:
+      definitionsUrl: ''
+      dropdownLimit: 6
+      skinTone: default
+      useCustomFont: false
+      version: 16
+    ckeditor5_plugin_pack_find_and_replace__find_and_replace:
+      ui_type: dialog
+    ckeditor5_plugin_pack_font__font_color:
+      colors: {  }
+      use_default_colors: true
+      use_colorpicker: true
+      font_color_columns: 5
+      font_color_document_colors: 10
+      bg_color_columns: 5
+      bg_color_document_colors: 10
+    ckeditor5_plugin_pack_font__font_family:
+      options: ''
+    ckeditor5_plugin_pack_font__font_size:
+      options: ''
+    ckeditor5_plugin_pack_link_attributes__link_attributes:
+      attributes: {  }
+    ckeditor5_plugin_pack_paste_markdown__paste_markdown:
+      enabled: false
+    ckeditor5_plugin_pack_text_transformation__text_transformation:
+      enabled: false
+      extra_transformations: ''
+      extra_regex_transformations: {  }
+      groups:
+        typography:
+          transformations:
+            ellipsis:
+              enabled: 1
+            enDash:
+              enabled: 1
+            emDash:
+              enabled: 1
+          enabled: 1
+        quotes:
+          transformations:
+            quotesPrimary:
+              enabled: 1
+            quotesSecondary:
+              enabled: 1
+          enabled: 1
+        symbols:
+          transformations:
+            trademark:
+              enabled: 1
+            registeredTrademark:
+              enabled: 1
+            copyright:
+              enabled: 1
+          enabled: 1
+        mathematical:
+          transformations:
+            oneHalf:
+              enabled: 1
+            oneThird:
+              enabled: 1
+            twoThirds:
+              enabled: 1
+            oneFourth:
+              enabled: 1
+            threeQuarters:
+              enabled: 1
+            lessThanOrEqual:
+              enabled: 1
+            greaterThanOrEqual:
+              enabled: 1
+            notEqual:
+              enabled: 1
+            arrowLeft:
+              enabled: 1
+            arrowRight:
+              enabled: 1
+          enabled: 1
+        misc:
+          transformations:
+            quotesPrimaryEnGb:
+              enabled: 0
+            quotesSecondaryEnGb:
+              enabled: 0
+            quotesPrimaryPl:
+              enabled: 0
+            quotesSecondaryPl:
+              enabled: 0
+          enabled: 0
+    ckeditor5_plugin_pack_word_count__word_count:
+      word_count_enabled: false
+      word_count_mode: words_chars
+    ckeditor5_sourceEditing:
+      allowed_tags: {  }
+image_upload:
+  status: true
+  scheme: public
+  directory: inline-images
+  max_size: null
+  max_dimensions:
+    width: null
+    height: null

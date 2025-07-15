@@ -1,0 +1,19 @@
+uuid: 9cbf54ae-5f59-43bc-8bca-4bee62a4a992
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_menu_title
+    - node.type.topics
+id: node.topics.field_menu_title
+field_name: field_menu_title
+entity_type: node
+bundle: topics
+label: 'Menu Title'
+description: 'This is a custom menu Link through which we can access this current node.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

@@ -1,0 +1,48 @@
+uuid: afb2affe-edf2-4e73-8a6d-8f0d2418e5b6
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.taxonomy_term.tutorials.field_assistant_id
+    - field.field.taxonomy_term.tutorials.field_keywords
+    - field.field.taxonomy_term.tutorials.field_thread_id
+    - taxonomy.vocabulary.tutorials
+  module:
+    - text
+id: taxonomy_term.tutorials.default
+targetEntityType: taxonomy_term
+bundle: tutorials
+mode: default
+content:
+  description:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  field_assistant_id:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  field_keywords:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 3
+    region: content
+  field_thread_id:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 2
+    region: content
+hidden: {  }

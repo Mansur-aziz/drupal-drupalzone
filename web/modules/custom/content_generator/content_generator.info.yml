@@ -1,5 +1,0 @@
-name: 'content generator'
-type: module
-description: 'This module will generate content using OpenAi Api and will Publish it.'
-package: Ai By Mansoor Aziz
-core_version_requirement: ^10 || ^11

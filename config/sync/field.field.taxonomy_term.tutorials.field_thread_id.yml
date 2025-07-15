@@ -1,0 +1,19 @@
+uuid: 931d2669-809f-49b0-ab88-1de9ae412d29
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.taxonomy_term.field_thread_id
+    - taxonomy.vocabulary.tutorials
+id: taxonomy_term.tutorials.field_thread_id
+field_name: field_thread_id
+entity_type: taxonomy_term
+bundle: tutorials
+label: 'Thread ID'
+description: 'AI Thread ID will be added here from OpenAI.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

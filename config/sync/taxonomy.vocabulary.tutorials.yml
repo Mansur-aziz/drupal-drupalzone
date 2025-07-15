@@ -1,0 +1,9 @@
+uuid: d268769b-f808-441a-bd5c-6623232dfe52
+langcode: en
+status: true
+dependencies: {  }
+name: Tutorials
+vid: tutorials
+description: 'Tutorials List will be available here.'
+weight: -10
+new_revision: false

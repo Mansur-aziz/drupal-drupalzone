@@ -1,0 +1,29 @@
+uuid: abe4f141-8b68-4356-8358-5464bde9a3b5
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_tutorial
+    - node.type.topics
+    - taxonomy.vocabulary.tutorials
+id: node.topics.field_tutorial
+field_name: field_tutorial
+entity_type: node
+bundle: topics
+label: Tutorial
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      tutorials: tutorials
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

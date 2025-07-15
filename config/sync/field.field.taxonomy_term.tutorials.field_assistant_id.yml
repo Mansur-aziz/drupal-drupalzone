@@ -1,0 +1,19 @@
+uuid: 6a30b557-675a-4b31-ad00-ad27eff258e0
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.taxonomy_term.field_assistant_id
+    - taxonomy.vocabulary.tutorials
+id: taxonomy_term.tutorials.field_assistant_id
+field_name: field_assistant_id
+entity_type: taxonomy_term
+bundle: tutorials
+label: 'Assistant ID'
+description: 'AI Assistant ID will be added here from OpenAI.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

@@ -1,0 +1,43 @@
+uuid: d6d6d461-adff-4da3-a5b4-59671aeab667
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.taxonomy_term.sub_tutorials.field_parent_tutorial
+    - taxonomy.vocabulary.sub_tutorials
+  module:
+    - path
+id: taxonomy_term.sub_tutorials.default
+targetEntityType: taxonomy_term
+bundle: sub_tutorials
+mode: default
+content:
+  field_parent_tutorial:
+    type: options_select
+    weight: 1
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  name:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  path:
+    type: path
+    weight: 2
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  status:
+    type: boolean_checkbox
+    weight: 3
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
+hidden:
+  description: true

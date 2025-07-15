@@ -1,0 +1,30 @@
+uuid: f5a40ee1-e9b4-4bb9-a2de-7b8ab20bf59b
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.taxonomy_term.sub_tutorials.field_parent_tutorial
+    - taxonomy.vocabulary.sub_tutorials
+  module:
+    - text
+id: taxonomy_term.sub_tutorials.default
+targetEntityType: taxonomy_term
+bundle: sub_tutorials
+mode: default
+content:
+  description:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  field_parent_tutorial:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 1
+    region: content
+hidden: {  }

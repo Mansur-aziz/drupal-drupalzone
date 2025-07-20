@@ -98,6 +98,7 @@ class TutorialBatchGenerator {
     $content = preg_replace('/<title[^>]*>.*?<\/title>/si', '', $content);
     $content = preg_replace('/<\/?(html|head|body)[^>]*>/i', '', $content);
     $content = str_replace(['```html', '```'], '', $content);
+    $content = preg_replace('/<style[^>]*>.*?<\/style>/si', '', $content);
     $content = trim($content);
 
     // Create node

@@ -2,8 +2,12 @@ uuid: c0ef93b4-a1da-40e0-82c7-c7a8a66d8861
 langcode: en
 status: true
 dependencies:
+  config:
+    - taxonomy.vocabulary.sub_tutorials
+    - taxonomy.vocabulary.tutorials
   module:
     - node
+    - taxonomy
     - user
 _core:
   default_config_hash: VhgEYFEzezna1qjycmr6NgssQgyiLfUvOv-iB_a_I6o
@@ -389,6 +393,96 @@ display:
             default_group: All
             default_group_multiple: {  }
             group_items: {  }
+        field_tutorial_target_id:
+          id: field_tutorial_target_id
+          table: node__field_tutorial
+          field: field_tutorial_target_id
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: taxonomy_index_tid
+          operator: or
+          value: {  }
+          group: 1
+          exposed: true
+          expose:
+            operator_id: field_tutorial_target_id_op
+            label: Tutorials
+            description: ''
+            use_operator: false
+            operator: field_tutorial_target_id_op
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: field_tutorial_target_id
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+            reduce: false
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          reduce_duplicates: false
+          vid: tutorials
+          type: select
+          hierarchy: false
+          limit: true
+          error_message: true
+        field_sub_tutorial_category_target_id:
+          id: field_sub_tutorial_category_target_id
+          table: node__field_sub_tutorial_category
+          field: field_sub_tutorial_category_target_id
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: taxonomy_index_tid
+          operator: or
+          value: {  }
+          group: 1
+          exposed: true
+          expose:
+            operator_id: field_sub_tutorial_category_target_id_op
+            label: 'Sub Tutorial Category'
+            description: ''
+            use_operator: false
+            operator: field_sub_tutorial_category_target_id_op
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: field_sub_tutorial_category_target_id
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+            reduce: false
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          reduce_duplicates: false
+          vid: sub_tutorials
+          type: select
+          hierarchy: false
+          limit: true
+          error_message: true
         type:
           id: type
           table: node_field_data

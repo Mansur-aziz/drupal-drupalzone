@@ -26,7 +26,7 @@ class SingleTopicsController extends ControllerBase {
         ->getStorage('node')
         ->load($nid);
 
-      if (!$node || $node->bundle() !== 'topics' || !$node->access('view')) {
+      if (!$node || $node->bundle() !== 'topics') {
         return new JsonResponse(['error' => 'Topic not found'], 404);
       }
       $term_name = \Drupal\taxonomy\Entity\Term::load($node->get('field_tutorial')->getValue()[0]['target_id'])->get('name')->value;

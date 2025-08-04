@@ -58,7 +58,7 @@ You are a professional Drupal instructor writing a structured tutorial for the s
 
 $intro
 
-Write a detailed (at least 1000 words) lesson for: "$topic_title".
+Write a detailed (at least 800 words) lesson for: "$topic_title".
 
 Requirements:
 - Use clean, semantic HTML with proper headings (e.g., <h1> for the title, <h2> for sections)

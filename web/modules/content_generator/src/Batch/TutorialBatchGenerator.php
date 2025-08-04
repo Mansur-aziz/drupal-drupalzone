@@ -75,14 +75,60 @@ PROMPT;
     sleep(1);
 
     // Step 1: Send message to thread
-    $msg_res = $client->post("https://api.openai.com/v1/threads/{$thread_id}/messages", [
-      'headers' => [
-        'Authorization' => "Bearer {$api_key}",
-        'Content-Type' => 'application/json',
-        'OpenAI-Beta' => 'assistants=v2',
-      ],
-      'json' => ['role' => 'user', 'content' => $prompt],
-    ]);
+    // $msg_res = $client->post("https://api.openai.com/v1/threads/{$thread_id}/messages", [
+    //   'headers' => [
+    //     'Authorization' => "Bearer {$api_key}",
+    //     'Content-Type' => 'application/json',
+    //     'OpenAI-Beta' => 'assistants=v2',
+    //   ],
+    //   'json' => ['role' => 'user', 'content' => $prompt],
+    // ]);
+    try {
+      $msg_res = $client->post("https://api.openai.com/v1/threads/{$thread_id}/messages", [
+        'headers' => [
+          'Authorization' => "Bearer {$api_key}",
+          'Content-Type' => 'application/json',
+          'OpenAI-Beta' => 'assistants=v2',
+        ],
+        'json' => ['role' => 'user', 'content' => $prompt],
+      ]);
+    } catch (\GuzzleHttp\Exception\ClientException $e) {
+      $response_body = json_decode($e->getResponse()->getBody()->getContents(), true);
+      $error_message = $response_body['error']['message'] ?? '';
+    
+      // Handle rate limit error
+      if (strpos($error_message, 'Rate limit reached') !== false) {
+        \Drupal::logger('tutorial_article_generator')->warning('Rate limit hit for topic "@topic": @msg', [
+          '@topic' => $topic_title,
+          '@msg' => $error_message,
+        ]);
+        
+        // Extract wait time if available
+        if (preg_match('/try again in ([\d\.]+)s/', $error_message, $matches)) {
+          $wait_time = (float) $matches[1];
+          sleep((int) ceil($wait_time));
+        } else {
+          sleep(10); // fallback wait
+        }
+    
+        // Retry once after wait
+        $msg_res = $client->post("https://api.openai.com/v1/threads/{$thread_id}/messages", [
+          'headers' => [
+            'Authorization' => "Bearer {$api_key}",
+            'Content-Type' => 'application/json',
+            'OpenAI-Beta' => 'assistants=v2',
+          ],
+          'json' => ['role' => 'user', 'content' => $prompt],
+        ]);
+      } else {
+        // Log and skip any other errors
+        \Drupal::logger('tutorial_article_generator')->error('Error sending message for topic "@topic": @msg', [
+          '@topic' => $topic_title,
+          '@msg' => $error_message,
+        ]);
+        return;
+      }
+    }    
 
     // Step 2: Start run
     $run_res = $client->post("https://api.openai.com/v1/threads/{$thread_id}/runs", [

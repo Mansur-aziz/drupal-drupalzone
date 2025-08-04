@@ -5,6 +5,7 @@ namespace Drupal\custom_api\Controller;
 use Drupal\Core\Controller\ControllerBase;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Drupal\taxonomy\Entity\Term;
 
 /**
  * Controller for the topics API endpoint.
@@ -49,6 +50,23 @@ class SingleTopicsController extends ControllerBase {
 
       // Format for the display text (e.g., December 8, 2020).
       $display_date = $date_formatter->format($created_time, 'custom', 'F j, Y');
+      // Versions
+
+      $term_ids = [];
+      $term_names = [];
+      // Assuming 'field_versions' is the machine name of your multi-value taxonomy field
+      foreach ($node->get('field_versions') as $item) {
+        if (!empty($item->target_id)) {
+          $term_ids[] = $item->target_id;
+        }
+      }
+
+      if (!empty($term_ids)) {
+        $terms = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->loadMultiple(array_reverse($term_ids));
+        foreach ($terms as $term) {
+          $term_names[] = $term->getName();
+        }
+      }
 
       // Prepare the variables for the template.
       $variables = [
@@ -71,6 +89,7 @@ class SingleTopicsController extends ControllerBase {
           'created' => $node->getCreatedTime(),
           'lesson_no' => $node->hasField('field_lesson_no') ? $node->get('field_lesson_no')->value : null,
           'menu_title' => $node->hasField('field_menu_title') ? $node->get('field_menu_title')->value : $node->getTitle(),
+          'versions' => $term_names,
         ],
         'meta' => [
           'keywords' => $node->hasField('field_keywords') ? $node->get('field_keywords')->value : $term_name . ',' . $node->getTitle() ,

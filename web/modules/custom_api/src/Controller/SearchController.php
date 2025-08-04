@@ -30,6 +30,7 @@ class SearchController extends ControllerBase {
       
       $entity_query = \Drupal::entityQuery('node')->condition('type', 'topics');
       $entity_query->accessCheck(FALSE);
+      $entity_query->condition('status', 1);
       if (!empty($query)) {
         $entity_query->condition('title', '%' . $query . '%', 'LIKE');
         $nids = $entity_query->execute();

@@ -150,8 +150,8 @@ class TutorialArticleGeneratorForm extends FormBase {
       $res1 = $client->post('https://api.openai.com/v1/assistants', [
         'headers' => $headers,
         'json' => [
-          'name' => 'Drupal Blog Writer',
-          'instructions' => 'You are a Drupal tutorial instructor. Generate long HTML blogs with meta tags.',
+          'name' => 'Drupal Tutorial Writer',
+          'instructions' => 'You are an expert Drupal instructor. Generate well-structured, SEO-friendly HTML tutorials. Use simple language, consistent examples, proper HTML formatting (<h1>, <h2>, etc.), and include <meta> tags for SEO. Every lesson should build on the previous one if it exists. Engage the learner with a clear tone, like a professional human trainer.',
           'model' => 'gpt-4o',
         ],
       ]);
@@ -191,10 +191,14 @@ class TutorialArticleGeneratorForm extends FormBase {
 
 
     $operations = [];
-    foreach ($topics as $topic) {
+    // foreach ($topics as $topic) {
+    for ($i = 0; $i < count($topics); $i++) {
+      $current_topic = $topics[$i];
+      $next_topic = $topics[$i + 1] ?? null; // null if it's the last one
+
       $operations[] = [
         ['\\Drupal\\content_generator\\Batch\TutorialBatchGenerator', 'generate'],
-        [$topic['title'], $topic['menu_title'], $tutorial_tid, $assistant_id, $thread_id, $lesson_number,$sub_tutorial_tid,$versions_tid],
+        [$current_topic['title'], $current_topic['menu_title'], $tutorial_tid, $assistant_id, $thread_id, $lesson_number,$sub_tutorial_tid,$versions_tid, $next_topic['title'] ?? null],
       ];
       $lesson_number++;
     }

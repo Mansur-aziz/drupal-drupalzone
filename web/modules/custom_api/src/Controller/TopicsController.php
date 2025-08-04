@@ -33,12 +33,12 @@ class TopicsController extends ControllerBase {
         $query = \Drupal::entityQuery('taxonomy_term')
           ->condition('vid', 'sub_tutorials')
           ->condition('field_parent_tutorial', $tid)
+          ->condition('status', 1)
           ->accessCheck(TRUE);
         $tids = $query->execute();
         if (!empty($tids)) {
           $terms = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->loadMultiple($tids);
           foreach ($terms as $term) {
-            
             $terms_data['data'][] = [
               'id' => $term->id(),
               'heading' => $term->getName(),
@@ -63,8 +63,10 @@ class TopicsController extends ControllerBase {
     ->condition('status', 1)
     ->condition('field_tutorial', $tid)
     ->condition('field_sub_tutorial_category', $stid)
+    ->condition('status', 1)
     ->accessCheck(TRUE)
     ->sort('field_lesson_no', 'ASC');
+    // ->sort('weight', 'ASC');
 
     $nids = $query->execute();
     $topics_data = ['data' => []];

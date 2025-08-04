@@ -23,7 +23,9 @@ class TutorialsController extends ControllerBase {
     $query = \Drupal::entityQuery('taxonomy_term')
       ->condition('vid', 'tutorials')
       ->accessCheck(TRUE)
-      ->sort('name', 'ASC');
+      ->condition('status', 1)
+      // ->sort('name', 'ASC');
+      ->sort('weight', 'ASC');
     
     $tids = $query->execute();
 

@@ -216,6 +216,28 @@ class TutorialArticleGeneratorForm extends FormBase {
   }
 
   public static function onBatchFinished($success, $results, $operations) {
+    if ($success && !empty($results)) {
+      $message = t('Batch complete. The following topics were created:') . '<ul>';
+      $log_lines = [];
+  
+      foreach ($results as $title) {
+        $safe_title = htmlspecialchars($title);
+        $message .= '<li>' . $safe_title . '</li>';
+        $log_lines[] = $title;
+      }
+  
+      $message .= '</ul>';
+      \Drupal::messenger()->addMessage(['#markup' => $message, '#allowed_tags' => ['ul', 'li']]);
+  
+      // ✅ Add to Drupal log
+      \Drupal::logger('tutorial_article_generator')->info('Batch created the following topics: @list', [
+        '@list' => implode(', ', $log_lines),
+      ]);
+  
+    } else {
+      \Drupal::messenger()->addMessage(t('Batch finished with no topics created.'), 'warning');
+      \Drupal::logger('tutorial_article_generator')->warning('Batch completed with no topics created.');
+    }
     \Drupal::messenger()->addMessage(t('Batch processing complete.')); 
   }
 }

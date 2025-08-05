@@ -64,6 +64,7 @@ Requirements:
 - Use clean, semantic HTML with proper headings (e.g., <h1> for the title, <h2> for sections)
 - Include SEO-friendly <meta name="description"> and <meta name="keywords"> at the top
 - Explain concepts with clarity, using consistent examples throughout the series
+- Code examples Should be in proper code block HTML tags
 - Assume the learner is new to Drupal and guide them as a human mentor would
 - Avoid repeating generic welcomes in every lesson
 - $next_tease

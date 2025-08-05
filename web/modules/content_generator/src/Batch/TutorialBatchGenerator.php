@@ -5,6 +5,7 @@ namespace Drupal\content_generator\Batch;
 use Drupal\taxonomy\Entity\Term;
 use Drupal\node\Entity\Node;
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\RequestException;
 
 class TutorialBatchGenerator {
 
@@ -13,36 +14,61 @@ class TutorialBatchGenerator {
     $run_status = 'queued';
 
     while ($run_status !== 'completed' && $run_status !== 'failed' && $tries < $max_tries) {
-      sleep(2); // Wait 2 seconds
+      sleep(2);
       $tries++;
 
       $status_res = $client->get("https://api.openai.com/v1/threads/{$thread_id}/runs/{$run_id}", [
-        'headers' => [
-          'Authorization' => "Bearer {$api_key}",
-          'Content-Type' => 'application/json',
-          'OpenAI-Beta' => 'assistants=v2',
-        ],
+        'headers' => self::headers($api_key),
       ]);
-
       $status_data = json_decode($status_res->getBody()->getContents(), TRUE);
       $run_status = $status_data['status'];
     }
 
+    return ['status' => $run_status, 'data' => $status_data ?? []];
+  }
+
+  protected static function headers($api_key) {
     return [
-      'status' => $run_status,
-      'data' => $status_data ?? [],
+      'Authorization' => "Bearer {$api_key}",
+      'Content-Type' => 'application/json',
+      'OpenAI-Beta' => 'assistants=v2',
     ];
+  }
+
+  protected static function retryRequest(callable $callback, $maxRetries = 4, $baseDelay = 10) {
+    for ($attempt = 1; $attempt <= $maxRetries; $attempt++) {
+      try {
+        return $callback();
+      } catch (RequestException $e) {
+        $response = $e->getResponse();
+        $body = $response ? json_decode($response->getBody()->getContents(), true) : [];
+        $message = $body['error']['message'] ?? $e->getMessage();
+
+        \Drupal::logger('tutorial_article_generator')->warning('Attempt @attempt failed: @message', [
+          '@attempt' => $attempt,
+          '@message' => $message,
+        ]);
+
+        if (strpos($message, 'Rate limit reached') !== false && preg_match('/try again in ([\d\.]+)s/', $message, $matches)) {
+          $wait = (float) $matches[1];
+          sleep((int) ceil($wait));
+        } else {
+          sleep($baseDelay * $attempt);
+        }
+
+        if ($attempt === $maxRetries) {
+          throw $e;
+        }
+      }
+    }
   }
 
   public static function generate($topic_title, $menu_title, $tutorial_tid, $assistant_id, $thread_id, $lesson_number, $sub_tutorial_tid, $versions_tid, $next_title, &$context) {
     $api_key = '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';
     $client = new Client();
 
-    $tutorial_name = '';
     $term = Term::load($tutorial_tid);
-    if ($term) {
-      $tutorial_name = $term->getName();
-    }
+    $tutorial_name = $term ? $term->getName() : '';
 
     $is_first = ($lesson_number == 1);
     $intro = $is_first
@@ -71,102 +97,52 @@ Requirements:
 Only return the HTML content of the article.
 PROMPT;
 
-    // 🔐 Short delay to avoid message-before-run conflict in fast batches
-    sleep(1);
+    sleep(1); // prevent race
 
-    // Step 1: Send message to thread
-    // $msg_res = $client->post("https://api.openai.com/v1/threads/{$thread_id}/messages", [
-    //   'headers' => [
-    //     'Authorization' => "Bearer {$api_key}",
-    //     'Content-Type' => 'application/json',
-    //     'OpenAI-Beta' => 'assistants=v2',
-    //   ],
-    //   'json' => ['role' => 'user', 'content' => $prompt],
-    // ]);
     try {
-      $msg_res = $client->post("https://api.openai.com/v1/threads/{$thread_id}/messages", [
-        'headers' => [
-          'Authorization' => "Bearer {$api_key}",
-          'Content-Type' => 'application/json',
-          'OpenAI-Beta' => 'assistants=v2',
-        ],
-        'json' => ['role' => 'user', 'content' => $prompt],
-      ]);
-    } catch (\GuzzleHttp\Exception\ClientException $e) {
-      $response_body = json_decode($e->getResponse()->getBody()->getContents(), true);
-      $error_message = $response_body['error']['message'] ?? '';
-    
-      // Handle rate limit error
-      if (strpos($error_message, 'Rate limit reached') !== false) {
-        \Drupal::logger('tutorial_article_generator')->warning('Rate limit hit for topic "@topic": @msg', [
-          '@topic' => $topic_title,
-          '@msg' => $error_message,
-        ]);
-        
-        // Extract wait time if available
-        if (preg_match('/try again in ([\d\.]+)s/', $error_message, $matches)) {
-          $wait_time = (float) $matches[1];
-          sleep((int) ceil($wait_time));
-        } else {
-          sleep(10); // fallback wait
-        }
-    
-        // Retry once after wait
-        $msg_res = $client->post("https://api.openai.com/v1/threads/{$thread_id}/messages", [
-          'headers' => [
-            'Authorization' => "Bearer {$api_key}",
-            'Content-Type' => 'application/json',
-            'OpenAI-Beta' => 'assistants=v2',
-          ],
+      // Step 1: Send message with retry
+      $msg_res = self::retryRequest(function () use ($client, $api_key, $thread_id, $prompt) {
+        return $client->post("https://api.openai.com/v1/threads/{$thread_id}/messages", [
+          'headers' => self::headers($api_key),
           'json' => ['role' => 'user', 'content' => $prompt],
         ]);
-      } else {
-        // Log and skip any other errors
-        \Drupal::logger('tutorial_article_generator')->error('Error sending message for topic "@topic": @msg', [
-          '@topic' => $topic_title,
-          '@msg' => $error_message,
+      });
+
+      // Step 2: Start run
+      $run_res = self::retryRequest(function () use ($client, $api_key, $thread_id, $assistant_id) {
+        return $client->post("https://api.openai.com/v1/threads/{$thread_id}/runs", [
+          'headers' => self::headers($api_key),
+          'json' => ['assistant_id' => $assistant_id],
         ]);
+      });
+
+      $run_data = json_decode($run_res->getBody()->getContents(), TRUE);
+      $run_id = $run_data['id'];
+
+      // Step 3: Wait for run
+      $result = self::waitForRunCompletion($client, $thread_id, $run_id, $api_key);
+      if ($result['status'] !== 'completed') {
+        $error = $result['data']['last_error']['message'] ?? 'Unknown run error';
+        \Drupal::logger('tutorial_article_generator')->error('Run failed for "@topic": @msg', ['@topic' => $topic_title, '@msg' => $error]);
         return;
       }
-    }    
 
-    // Step 2: Start run
-    $run_res = $client->post("https://api.openai.com/v1/threads/{$thread_id}/runs", [
-      'headers' => [
-        'Authorization' => "Bearer {$api_key}",
-        'Content-Type' => 'application/json',
-        'OpenAI-Beta' => 'assistants=v2',
-      ],
-      'json' => ['assistant_id' => $assistant_id],
-    ]);
+      // Step 4: Fetch content
+      $res = $client->get("https://api.openai.com/v1/threads/{$thread_id}/messages", [
+        'headers' => self::headers($api_key),
+      ]);
+      $body = json_decode($res->getBody()->getContents(), TRUE);
+      $content = $body['data'][0]['content'][0]['text']['value'] ?? '';
 
-    $run_data = json_decode($run_res->getBody()->getContents(), TRUE);
-    $run_id = $run_data['id'];
-
-    // Step 3: Wait for run completion
-    $result = self::waitForRunCompletion($client, $thread_id, $run_id, $api_key);
-    if ($result['status'] !== 'completed') {
-      $error_reason = $result['data']['last_error']['message'] ?? 'Unknown error';
-      \Drupal::logger('tutorial_article_generator')->error('Run failed for topic "@topic": @reason', [
+    } catch (\Exception $e) {
+      \Drupal::logger('tutorial_article_generator')->error('Failed generating topic "@topic": @error', [
         '@topic' => $topic_title,
-        '@reason' => $error_reason,
+        '@error' => $e->getMessage(),
       ]);
       return;
     }
 
-    // Step 4: Fetch messages (output)
-    $res = $client->get("https://api.openai.com/v1/threads/{$thread_id}/messages", [
-      'headers' => [
-        'Authorization' => "Bearer {$api_key}",
-        'Content-Type' => 'application/json',
-        'OpenAI-Beta' => 'assistants=v2',
-      ],
-    ]);
-
-    $body = json_decode($res->getBody()->getContents(), TRUE);
-    $content = $body['data'][0]['content'][0]['text']['value'] ?? '';
-
-    // Step 5: Extract title, meta tags
+    // Step 5: Extract + clean
     preg_match('/<h1[^>]*>(.*?)<\/h1>/', $content, $title_match);
     preg_match('/<meta name="description" content="(.*?)"/', $content, $desc_match);
     preg_match('/<meta name="keywords" content="(.*?)"/', $content, $key_match);

@@ -160,29 +160,30 @@ class TutorialArticleGeneratorForm extends FormBase {
         'Content-Type' => 'application/json',
         'OpenAI-Beta' => 'assistants=v2',
       ];
-
-      // Create assistant
-      $res1 = $client->post('https://api.openai.com/v1/assistants', [
-        'headers' => $headers,
-        'json' => [
-          'name' => 'Drupal Tutorial Writer',
-          'instructions' => 'You are an expert Drupal instructor. Generate well-structured, SEO-friendly HTML tutorials. Use simple language, consistent examples, proper HTML formatting (<h1>, <h2>, etc.), and include <meta> tags for SEO. Every lesson should build on the previous one if it exists. Engage the learner with a clear tone, like a professional human trainer.',
-          'model' => 'gpt-4o',
-        ],
-      ]);
-      $assistant_data = json_decode($res1->getBody()->getContents(), TRUE);
-      $assistant_id = $assistant_data['id'];
-
-      // Create thread
-      $res2 = $client->post('https://api.openai.com/v1/threads', [
-        'headers' => $headers,
-      ]);
-      $thread_data = json_decode($res2->getBody()->getContents(), TRUE);
-      $thread_id = $thread_data['id'];
-
-      // Save IDs to term
-      $term->set('field_assistant_id', $assistant_id);
-      $term->set('field_thread_id', $thread_id);
+      if(!$assistant_id){
+        // Create assistant
+        $res1 = $client->post('https://api.openai.com/v1/assistants', [
+          'headers' => $headers,
+          'json' => [
+            'name' => 'Drupal Tutorial Writer',
+            'instructions' => 'You are an expert Drupal instructor. Generate well-structured, SEO-friendly HTML tutorials. Use simple language, consistent examples, proper HTML formatting (<h1>, <h2>, etc.), and include <meta> tags for SEO. Every lesson should build on the previous one if it exists. Engage the learner with a clear tone, like a professional human trainer.',
+            'model' => 'gpt-4o',
+          ],
+        ]);
+        $assistant_data = json_decode($res1->getBody()->getContents(), TRUE);
+        $assistant_id = $assistant_data['id'];
+        // Save IDs to term
+        $term->set('field_assistant_id', $assistant_id);
+      }
+      if(!$thread_id){
+        // Create thread
+        $res2 = $client->post('https://api.openai.com/v1/threads', [
+          'headers' => $headers,
+        ]);
+        $thread_data = json_decode($res2->getBody()->getContents(), TRUE);
+        $thread_id = $thread_data['id'];
+        $term->set('field_thread_id', $thread_id);
+      }
       $term->save();
     }
   

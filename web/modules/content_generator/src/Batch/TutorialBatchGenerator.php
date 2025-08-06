@@ -126,6 +126,7 @@ PROMPT;
       if ($result['status'] !== 'completed') {
         $error = $result['data']['last_error']['message'] ?? 'Unknown run error';
         \Drupal::logger('tutorial_article_generator')->error('Run failed for "@topic": @msg', ['@topic' => $topic_title, '@msg' => $error]);
+        $context['results'][] = "Error in Generating : ".$menu_title."=>". $topic_title;
         return;
       }
 

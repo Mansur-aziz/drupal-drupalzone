@@ -174,6 +174,22 @@ class TutorialArticleGeneratorForm extends FormBase {
         $assistant_id = $assistant_data['id'];
         // Save IDs to term
         $term->set('field_assistant_id', $assistant_id);
+      }else{
+        // Get max lesson number for this tutorial
+        $query_last = \Drupal::entityQuery('node')
+        ->accessCheck(FALSE)
+        ->condition('type', 'topics')
+        ->condition('field_tutorial.target_id', $tutorial_tid)
+        ->sort('field_lesson_no', 'DESC')
+        ->range(0, 1);
+        $last_nid = $query_last->execute();
+    
+        if (!empty($last_nid)) {
+          $latest_nid_ready = reset($last_nid);
+          $node_content = Node::load($latest_nid_ready);
+          $summary_body = strip_tags(($node_content->get('field_content')->value));
+          $summary = substr($summary_body, 0, 3000); // limit context size
+        }
       }
       if(!$thread_id){
         // Create thread
@@ -214,7 +230,7 @@ class TutorialArticleGeneratorForm extends FormBase {
 
         $operations[] = [
         ['\\Drupal\\content_generator\\Batch\TutorialBatchGenerator', 'generate'],
-        [$current_topic['title'], $current_topic['menu_title'], $tutorial_tid, $assistant_id, $thread_id, $lesson_number,$sub_tutorial_tid,$versions_tid, $next_topic['title'] ?? null,$total_words ?? null],
+        [$current_topic['title'], $current_topic['menu_title'], $tutorial_tid, $assistant_id, $thread_id, $lesson_number,$sub_tutorial_tid,$versions_tid, $next_topic['title'] ?? null,$total_words ?? null,$summary ?? null],
         ];
         $lesson_number++;
       }

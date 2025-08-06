@@ -63,7 +63,7 @@ class TutorialBatchGenerator {
     }
   }
 
-  public static function generate($topic_title, $menu_title, $tutorial_tid, $assistant_id, $thread_id, $lesson_number, $sub_tutorial_tid, $versions_tid, $next_title, $total_words, &$context) {
+  public static function generate($topic_title, $menu_title, $tutorial_tid, $assistant_id, $thread_id, $lesson_number, $sub_tutorial_tid, $versions_tid, $next_title, $total_words, $summary, &$context) {
     $api_key = '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';
     $client = new Client();
 
@@ -80,6 +80,9 @@ class TutorialBatchGenerator {
       : "";
     
     $content_words = $total_words ? "(at least ".$total_words." words)" : "";
+    // $previous_summary = $summary ? "- In our previous thread we generated this topic here is its summery : (".$summary.")" : "";
+    $previous_summary = $summary ? "- Summary of the previous lesson to provide continuity: \"$summary\"" : "";
+
 
     $prompt = <<<PROMPT
 You are a professional Drupal instructor writing a structured tutorial for the series titled: "$tutorial_name".
@@ -87,6 +90,7 @@ You are a professional Drupal instructor writing a structured tutorial for the s
 $intro
 
 Write a detailed $content_words lesson for: "$topic_title".
+
 
 Requirements:
 - Use clean, semantic HTML with proper headings (e.g., <h1> for the title, <h2> for sections)
@@ -96,7 +100,12 @@ Requirements:
 - Avoid repeating generic welcomes in every lesson
 - $next_tease
 
+
 Only return the HTML content of the article.
+
+
+$previous_summary
+
 PROMPT;
 
     sleep(1); // prevent race

@@ -63,7 +63,7 @@ class TutorialBatchGenerator {
     }
   }
 
-  public static function generate($topic_title, $menu_title, $tutorial_tid, $assistant_id, $thread_id, $lesson_number, $sub_tutorial_tid, $versions_tid, $next_title, &$context) {
+  public static function generate($topic_title, $menu_title, $tutorial_tid, $assistant_id, $thread_id, $lesson_number, $sub_tutorial_tid, $versions_tid, $next_title, $total_words, &$context) {
     $api_key = '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';
     $client = new Client();
 
@@ -78,13 +78,15 @@ class TutorialBatchGenerator {
     $next_tease = $next_title
       ? "At the end of this lesson, provide a teaser for the next topic: \"$next_title\" to maintain flow and keep the learner engaged."
       : "";
+    
+    $content_words = $total_words ? "(at least ".$total_words." words)" : "";
 
     $prompt = <<<PROMPT
 You are a professional Drupal instructor writing a structured tutorial for the series titled: "$tutorial_name".
 
 $intro
 
-Write a detailed (at least 800 words) lesson for: "$topic_title".
+Write a detailed $content_words lesson for: "$topic_title".
 
 Requirements:
 - Use clean, semantic HTML with proper headings (e.g., <h1> for the title, <h2> for sections)

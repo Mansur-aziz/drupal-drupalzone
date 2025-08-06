@@ -68,6 +68,20 @@ class TutorialArticleGeneratorForm extends FormBase {
     '#empty_option' => $this->t('- Select a tutorial first -'),
   ];
 
+  $form['total_words'] = [
+    '#type' => 'select',
+    '#title' => $this->t('Select Number of Words for Generating Content Using AI.'),
+    '#options' => [
+      '200' => t('200 Words'),
+      '400' => t('400 Words'),
+      '600' => t('600 Words'),
+      '800' => t('800 Words'),
+      '1000' => t('1000 Words'),
+      '1500' => t('1500 Words'),
+      '2000' => t('2000 Words'),
+    ],
+    '#empty_option' => $this->t('- Select a Topic Words -'),
+  ];
 
 
 
@@ -118,6 +132,7 @@ class TutorialArticleGeneratorForm extends FormBase {
     $tutorial_tid = $form_state->getValue('tutorial');
     $sub_tutorial_tid = $form_state->getValue('sub_tutorials');
     $versions_tid = $form_state->getValue('tags');
+    $total_words = $form_state->getValue('total_words');
     
     // $topics = array_filter(array_map('trim', explode("\n", $form_state->getValue('topics'))));
     
@@ -131,11 +146,11 @@ class TutorialArticleGeneratorForm extends FormBase {
       }
     }
 
-
+  
     $term = Term::load($tutorial_tid);
     $assistant_id = $term->get('field_assistant_id')->value;
     $thread_id = $term->get('field_thread_id')->value;
-
+  
     // If no assistant/thread exists, generate them now.
     if (!$assistant_id || !$thread_id) {
       $api_key = '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';
@@ -170,14 +185,14 @@ class TutorialArticleGeneratorForm extends FormBase {
       $term->set('field_thread_id', $thread_id);
       $term->save();
     }
-
+  
     // Get max lesson number for this tutorial
     $query = \Drupal::entityQuery('node')
-    ->accessCheck(FALSE)
-    ->condition('type', 'topics')
-    ->condition('field_tutorial.target_id', $tutorial_tid)
-    ->sort('field_lesson_no', 'DESC')
-    ->range(0, 1);
+      ->accessCheck(FALSE)
+      ->condition('type', 'topics')
+      ->condition('field_tutorial.target_id', $tutorial_tid)
+      ->sort('field_lesson_no', 'DESC')
+      ->range(0, 1);
 
     $nids = $query->execute();
     $start_lesson = 1;
@@ -196,17 +211,17 @@ class TutorialArticleGeneratorForm extends FormBase {
       $current_topic = $topics[$i];
       $next_topic = $topics[$i + 1] ?? null; // null if it's the last one
 
-      $operations[] = [
+        $operations[] = [
         ['\\Drupal\\content_generator\\Batch\TutorialBatchGenerator', 'generate'],
-        [$current_topic['title'], $current_topic['menu_title'], $tutorial_tid, $assistant_id, $thread_id, $lesson_number,$sub_tutorial_tid,$versions_tid, $next_topic['title'] ?? null],
-      ];
-      $lesson_number++;
-    }
+        [$current_topic['title'], $current_topic['menu_title'], $tutorial_tid, $assistant_id, $thread_id, $lesson_number,$sub_tutorial_tid,$versions_tid, $next_topic['title'] ?? null,$total_words ?? null],
+        ];
+        $lesson_number++;
+      }
     $batch_builder = (new BatchBuilder())
-    ->setTitle($this->t('Generating Articles'))
-    ->setInitMessage($this->t('Starting...'))
-    ->setProgressMessage($this->t('Generating @current of @total'))
-    ->setFinishCallback([get_class($this), 'onBatchFinished']);
+      ->setTitle($this->t('Generating Articles'))
+      ->setInitMessage($this->t('Starting...'))
+      ->setProgressMessage($this->t('Generating @current of @total'))
+      ->setFinishCallback([get_class($this), 'onBatchFinished']);
   
     foreach ($operations as $operation) {
       $batch_builder->addOperation(...$operation);
@@ -214,7 +229,7 @@ class TutorialArticleGeneratorForm extends FormBase {
   
     batch_set($batch_builder->toArray());
   }
-
+  
   public static function onBatchFinished($success, $results, $operations) {
     if ($success && !empty($results)) {
       $message = t('Batch complete. The following topics were created:') . '<ul>';
@@ -239,5 +254,5 @@ class TutorialArticleGeneratorForm extends FormBase {
       \Drupal::logger('tutorial_article_generator')->warning('Batch completed with no topics created.');
     }
     \Drupal::messenger()->addMessage(t('Batch processing complete.')); 
-  }
+  }  
 }

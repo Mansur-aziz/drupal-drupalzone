@@ -233,6 +233,7 @@ class TutorialArticleGeneratorForm extends FormBase {
         [$current_topic['title'], $current_topic['menu_title'], $tutorial_tid, $assistant_id, $thread_id, $lesson_number,$sub_tutorial_tid,$versions_tid, $next_topic['title'] ?? null,$total_words ?? null,$summary ?? null],
         ];
         $lesson_number++;
+        $summary = null;
       }
     $batch_builder = (new BatchBuilder())
       ->setTitle($this->t('Generating Articles'))

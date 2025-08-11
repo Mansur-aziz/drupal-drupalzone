@@ -81,7 +81,9 @@ class TopicsController extends ControllerBase {
           'slug'=> $node->toUrl()->toString(),
           'id' => $node->id(),
           'lesson_no' => $node->get('field_lesson_no')->value ? $node->get('field_lesson_no')->value : $node->id(),
-          'menu_title' => $node->get('field_menu_title')->value ? $node->get('field_menu_title')->value : $node->getTitle()
+          'menu_title' => $node->get('field_menu_title')->value ? $node->get('field_menu_title')->value : $node->getTitle(),
+          'created' => gmdate('c', $node->getCreatedTime()), // ISO 8601 creation date
+          'updated' => gmdate('c', $node->getChangedTime()), // ISO 8601 last updated date
         ];
       }
       return $topics_data;

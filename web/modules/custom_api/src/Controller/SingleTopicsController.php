@@ -78,24 +78,26 @@ class SingleTopicsController extends ControllerBase {
 
       $response = new JsonResponse([
         'data' => [
-        'id' => $node->id(),
-        'title' => $node->getTitle(),
-        'created' => $variables,
-        'attributes' => [
-          'content' => $node->hasField('field_content') ? $node->get('field_content')->value : '',
-          'skill_level' => $node->hasField('field_skill_level') ? $node->get('field_skill_level')->value : '',
-          'skill_level' => $node->hasField('field_skill_level') ? $node->get('field_skill_level')->value : '',
-          'tutorial_name' => $term_name ? $term_name : '',
-          'created' => $node->getCreatedTime(),
-          'lesson_no' => $node->hasField('field_lesson_no') ? $node->get('field_lesson_no')->value : null,
-          'menu_title' => $node->hasField('field_menu_title') ? $node->get('field_menu_title')->value : $node->getTitle(),
-          'versions' => $term_names,
-        ],
-        'meta' => [
-          'keywords' => $node->hasField('field_keywords') ? $node->get('field_keywords')->value : $term_name . ',' . $node->getTitle() ,
-          'meta_description' => $node->hasField('field_meta_description') ? $node->get('field_meta_description')->value : $term_name . ',' . $node->getTitle() ,
-        ],
-      ]]);
+          'id' => $node->id(),
+          'title' => $node->getTitle(),
+          'created' => $variables,
+          'attributes' => [
+            'content' => $node->hasField('field_content') ? $node->get('field_content')->value : '',
+            'skill_level' => $node->hasField('field_skill_level') ? $node->get('field_skill_level')->value : '',
+            'tutorial_name' => $term_name ? $term_name : '',
+            'created' => gmdate('c', $node->getCreatedTime()), // ISO 8601 creation date
+            'updated' => gmdate('c', $node->getChangedTime()), // ISO 8601 last updated date
+            'lesson_no' => $node->hasField('field_lesson_no') ? $node->get('field_lesson_no')->value : null,
+            'menu_title' => $node->hasField('field_menu_title') ? $node->get('field_menu_title')->value : $node->getTitle(),
+            'versions' => $term_names,
+          ],
+          'meta' => [
+            'keywords' => $node->hasField('field_keywords') ? $node->get('field_keywords')->value : $term_name . ',' . $node->getTitle(),
+            'meta_description' => $node->hasField('field_meta_description') ? $node->get('field_meta_description')->value : $term_name . ',' . $node->getTitle(),
+          ],
+        ]
+      ]);
+      
 
       // Set no-cache headers
       $response->headers->set('Cache-Control', 'no-cache, must-revalidate');

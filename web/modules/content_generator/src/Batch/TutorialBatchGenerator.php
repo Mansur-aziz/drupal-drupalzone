@@ -63,8 +63,8 @@ class TutorialBatchGenerator {
     }
   }
 
-  public static function generate($topic_title, $menu_title, $tutorial_tid, $assistant_id, $thread_id, $lesson_number, $sub_tutorial_tid, $versions_tid, $next_title, $total_words, $summary,$api_key, &$context) {
-    // $api_key = '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';
+  public static function generate($topic_title, $menu_title, $tutorial_tid, $assistant_id, $thread_id, $lesson_number, $sub_tutorial_tid, $versions_tid, $next_title, $total_words, $summary, &$context) {
+    $api_key = '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';
     // $api_key = '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';
     $client = new Client();
 

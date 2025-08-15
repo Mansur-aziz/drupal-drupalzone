@@ -230,9 +230,7 @@ class TutorialArticleGeneratorForm extends FormBase {
       $next_topic = $topics[$i + 1] ?? null; // null if it's the last one
 
         $operations[] = [
-          [
-            '\\Drupal\\content_generator\\Batch\TutorialBatchGenerator', 'generate'
-          ],
+          ['\\Drupal\\content_generator\\Batch\TutorialBatchGenerator', 'generate'],
           [
             $current_topic['title'], 
             $current_topic['menu_title'], 
@@ -245,7 +243,6 @@ class TutorialArticleGeneratorForm extends FormBase {
             $next_topic['title'] ?? null,
             $total_words ?? null,
             $summary ?? null],
-            $api_key,
           ];
           $lesson_number++;
           $summary = null;

@@ -153,8 +153,8 @@ class TutorialArticleGeneratorForm extends FormBase {
   
     // If no assistant/thread exists, generate them now.
     if (!$assistant_id || !$thread_id) {
-      // $api_key = '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';
-      $api_key = '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';
+      $api_key = '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';
+      // $api_key = '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';
       $client = new \GuzzleHttp\Client();
       $headers = [
         'Authorization' => "Bearer $api_key",

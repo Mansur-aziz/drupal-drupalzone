@@ -6,8 +6,10 @@ dependencies:
     - field.field.taxonomy_term.tutorials.field_assistant_id
     - field.field.taxonomy_term.tutorials.field_keywords
     - field.field.taxonomy_term.tutorials.field_thread_id
+    - field.field.taxonomy_term.tutorials.field_tutorial_banner
     - taxonomy.vocabulary.tutorials
   module:
+    - image
     - text
 id: taxonomy_term.tutorials.default
 targetEntityType: taxonomy_term
@@ -44,5 +46,16 @@ content:
       link_to_entity: false
     third_party_settings: {  }
     weight: 2
+    region: content
+  field_tutorial_banner:
+    type: image
+    label: above
+    settings:
+      image_link: ''
+      image_style: ''
+      image_loading:
+        attribute: lazy
+    third_party_settings: {  }
+    weight: 4
     region: content
 hidden: {  }

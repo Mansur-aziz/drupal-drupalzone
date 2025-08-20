@@ -6,8 +6,11 @@ dependencies:
     - field.field.taxonomy_term.tutorials.field_assistant_id
     - field.field.taxonomy_term.tutorials.field_keywords
     - field.field.taxonomy_term.tutorials.field_thread_id
+    - field.field.taxonomy_term.tutorials.field_tutorial_banner
+    - image.style.thumbnail
     - taxonomy.vocabulary.tutorials
   module:
+    - image
     - path
     - text
 id: taxonomy_term.tutorials.default
@@ -25,7 +28,7 @@ content:
     third_party_settings: {  }
   field_assistant_id:
     type: string_textfield
-    weight: 2
+    weight: 3
     region: content
     settings:
       size: 60
@@ -33,7 +36,7 @@ content:
     third_party_settings: {  }
   field_keywords:
     type: string_textfield
-    weight: 4
+    weight: 5
     region: content
     settings:
       size: 60
@@ -41,11 +44,19 @@ content:
     third_party_settings: {  }
   field_thread_id:
     type: string_textfield
-    weight: 3
+    weight: 4
     region: content
     settings:
       size: 60
       placeholder: ''
+    third_party_settings: {  }
+  field_tutorial_banner:
+    type: image_image
+    weight: 2
+    region: content
+    settings:
+      progress_indicator: throbber
+      preview_image_style: thumbnail
     third_party_settings: {  }
   name:
     type: string_textfield
@@ -57,13 +68,13 @@ content:
     third_party_settings: {  }
   path:
     type: path
-    weight: 5
+    weight: 6
     region: content
     settings: {  }
     third_party_settings: {  }
   status:
     type: boolean_checkbox
-    weight: 6
+    weight: 7
     region: content
     settings:
       display_label: true

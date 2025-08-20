@@ -3,4 +3,4 @@ _core:
 selected_converter: gd
 quality: 100
 lossless: 0
-per_node_conversion: 0
+per_node_conversion: 1

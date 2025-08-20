@@ -37,6 +37,7 @@ class TutorialsController extends ControllerBase {
           'id' => $term->id(),
           'attributes' => [
             'name' => $term->getName(),
+            'banner' => $term->field_tutorial_banner->entity ? \Drupal::service('file_url_generator')->generateAbsoluteString($term->field_tutorial_banner->entity->getFileUri()) : NULL,
             'slug' => $term->toUrl()->toString(),
           ]
         ];

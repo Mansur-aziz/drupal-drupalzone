@@ -1,0 +1,5 @@
+name: 'Course Import API'
+type: module
+description: 'POST API for creating/updating "topics" course lesson nodes (with images), authenticated by a static API key. Used to publish tutorial content from local authoring into this site.'
+package: Custom
+core_version_requirement: ^10 || ^11

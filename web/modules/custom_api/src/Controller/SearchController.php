@@ -47,6 +47,7 @@ class SearchController extends ControllerBase {
         $node_url = Url::fromRoute('entity.node.canonical', ['node' => $node->id()])->toString();
         // $node_image = $this->getStoryThumbnail($node);
         $term_name = \Drupal\taxonomy\Entity\Term::load($node->get('field_tutorial')->target_id)->get('name')->value;
+        $tutorial_slug = \Drupal\taxonomy\Entity\Term::load($node->get('field_tutorial')->target_id)->toUrl()->toString();
         // \Drupal::entityTypeManager()->getStorage('taxonomy_term')->load();
         $stories[] = [
           "id"    => $node->id(),
@@ -54,7 +55,8 @@ class SearchController extends ControllerBase {
           "menu_title" => $node->get('field_menu_title')->value,
           "lesson_no" => $node->get('field_lesson_no')->value,
           "tutorial_id" => $node->get('field_tutorial')->target_id,
-          "tutorial_name" => $term_name
+          "tutorial_name" => $term_name,
+          'tutorial_slug' => $tutorial_slug
         ];
       }
       return new JsonResponse($stories);

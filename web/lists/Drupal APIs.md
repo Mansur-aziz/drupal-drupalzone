@@ -1,10 +1,11 @@
 Drupal APIs: Step-by-Step Topics
 1. Form API
-
+Basic
 Creating a Basic Form=> Building a form class extending FormBase  
 Defining Form Elements=> Adding fields (text, select, checkbox, etc.) to forms  
 Validating Form Input=> Implementing validateForm() for input validation  
 Handling Form Submission=> Processing data in submitForm()  
+Advance
 Adding AJAX to Forms=> Implementing AJAX callbacks with #ajax properties  
 Altering Existing Forms=> Using hook_form_alter() to modify forms  
 Creating Config Forms=> Building configuration forms with ConfigFormBase  

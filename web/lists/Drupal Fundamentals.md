@@ -1,27 +1,27 @@
 Drupal Fundamentals: Step-by-Step Topics
 1. Drupal Architecture Overview
 
-Understanding Drupal as a CMS=> Exploring Drupal’s role as a content management system  
+<!-- Understanding Drupal CMS=> Exploring Drupal’s role as a content management system  
 Learning Drupal’s Modular Structure=> Understanding modules, themes, and core components  
-Exploring Drupal’s File System=> Navigating directories (e.g., modules, themes, sites)  
-Understanding Drupal’s Request-Response Flow=> Learning how Drupal processes HTTP requests  
-Differentiating Core vs. Contrib Modules=> Recognizing Drupal core and contributed modules  
+Exploring Drupal’s File System=> Navigating directories (e.g. modules, themes, sites)  
+Drupal’s Request-Response Flow=> Learning how Drupal processes HTTP requests  
+Differentiating Core vs Contrib Modules=> Recognizing Drupal core and contributed modules  
 Exploring Drupal’s Entity System=> Understanding entities (nodes, users, taxonomy terms)  
-Learning Drupal’s Configuration System=> Overview of configuration vs. content storage
+Learning Drupal’s Configuration System=> Overview of configuration vs. content storage -->
 
 2. Installation and Setup
 
-Installing Drupal via Composer=> Setting up Drupal 10 with Composer  
+<!-- Installing Drupal via Composer=> Setting up Drupal 10 with Composer  
 Installing Drupal Manually=> Downloading and configuring Drupal via tarball  
 Configuring Database Settings=> Setting up settings.php for database connection  
 Running the Drupal Installer=> Completing the web-based installation process  
 Setting Up a Local Development Environment=> Using DDEV or Lando for local Drupal sites  
 Configuring Site Settings=> Setting site name, email, and timezone  
-Securing Drupal Installation=> Applying basic security settings post-install
+Securing Drupal Installation=> Applying basic security settings post-install -->
 
 3. Site Building Basics
 
-Creating Content Types=> Defining custom content types via UI  
+<!-- Creating Content Types=> Defining custom content types via UI  
 Adding Fields to Content Types=> Configuring text, image, or reference fields  
 Managing Field Settings=> Customizing field properties (e.g., required, default values)  
 Configuring Display Modes=> Setting up view modes (e.g., full, teaser)  
@@ -29,7 +29,7 @@ Configuring Form Displays=> Customizing form modes for content entry
 Creating Taxonomy Vocabularies=> Setting up vocabularies for categorization  
 Adding Taxonomy Terms=> Creating terms within vocabularies  
 Managing Menus=> Creating and organizing menu links  
-Placing Blocks=> Assigning blocks to regions via UI
+Placing Blocks=> Assigning blocks to regions via UI -->
 
 4. Content Management
 

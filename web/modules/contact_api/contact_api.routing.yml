@@ -1,0 +1,8 @@
+contact_api.submit:
+  path: '/custom-contact-submit'
+  defaults:
+    _controller: '\Drupal\contact_api\Controller\ContactApiController::submit'
+    _format: 'json'
+  methods: [POST]
+  requirements:
+    _access: 'TRUE'

@@ -1,0 +1,7 @@
+course_import_api.topic:
+  path: '/api/course-import/topic'
+  defaults:
+    _controller: 'Drupal\course_import_api\Controller\CourseImportController::importTopic'
+  requirements:
+    _access: 'TRUE'
+  methods: [POST]

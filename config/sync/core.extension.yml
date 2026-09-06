@@ -37,6 +37,7 @@ module:
   contact: 0
   content_generator: 0
   contextual: 0
+  course_import_api: 0
   custom_api: 0
   datetime: 0
   dblog: 0

@@ -1,0 +1,7 @@
+name: 'Contact API'
+type: module
+description: 'Custom endpoint to submit contact forms'
+core_version_requirement: ^10
+package: Custom
+dependencies:
+  - node

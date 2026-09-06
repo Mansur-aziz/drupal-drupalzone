@@ -25,6 +25,7 @@
         "drupal/gin": "^5.0",
         "drupal/gin_login": "^2.1",
         "drupal/image_webp_converter": "^1.0",
+        "drupal/messages": "^2.2",
         "drupal/pathauto": "^1.13",
         "drupal/restui": "^1.22",
         "drupal/views_accordion": "^2.0",

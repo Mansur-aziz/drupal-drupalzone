@@ -28,3 +28,7 @@ Current maintainers for Drupal 10:
 
 - FIRST_NAME LAST_NAME (NICKNAME) - https://www.drupal.org/u/NICKNAME
 
+share button link issue 
+form not drynamic
+search need secuity
+social accounts should be updated
